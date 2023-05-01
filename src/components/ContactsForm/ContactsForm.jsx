@@ -1,17 +1,17 @@
 import { FormContainer, Label, Button, Title } from './ContactForm.styled';
 import { Field } from './ContactForm.styled';
 import { Formik, Form } from 'formik';
-import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
-export const ContactsForm = ({ addNewContact }) => {
-  const generateId = nanoid();
+export const ContactsForm = () => {
+
+  const dispatch = useDispatch()
 
   const handleSubmit = (values, { resetForm }) => {
-    const newContact = { id: generateId, ...values };
-    addNewContact(newContact);
+    dispatch(addContact(values))
+
     resetForm();
-    return newContact;
   };
 
   return (
@@ -46,6 +46,3 @@ export const ContactsForm = ({ addNewContact }) => {
   );
 };
 
-Formik.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
